@@ -1,0 +1,12 @@
+# ignore log files
+*.log
+
+# ignore various IDE and otherwise generated files/directories
+.vs/
+.bundle/
+.idea/
+.git/
+.github/
+build/
+node_modules/
+.DS_Store
