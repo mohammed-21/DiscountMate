@@ -32,7 +32,6 @@ import pears from '../assets/images/test/pears.jpeg'
 
 const ItemPhoto = [
   {
-     
       image:Avo
   },
   {
@@ -70,7 +69,7 @@ const ItemPhoto = [
   },
 ]
 
-const DiscountNearby = () => {
+export function DiscountNearby(){
     const[clickedTab, setclickedTab] = useState('Food');
     const[itemList, setItemList] = useState();
     const[filtereditemList, setFilteredItemList] = useState();
@@ -278,5 +277,4 @@ const styles = StyleSheet.create({
         borderRadius:4,
         marginRight:5
     }
-}) 
-export default DiscountNearby;
+})

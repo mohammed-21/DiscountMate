@@ -1,4 +1,3 @@
-//quick error code template
 exports.get404 = (req, res, next) => {
     const error = new Error('Not found');
     error.status = 404;

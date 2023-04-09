@@ -1,4 +1,4 @@
-const Shop = require('../models/shop');
+const Shop = require('../models/shop-model');
 
 //gets all shops, used in the shop model.
 exports.getAllShops = async (req, res, next) => {

@@ -1,7 +1,7 @@
 //use express
 const express = require('express');
 const router = express.Router();
-var receiptModel = require('../models/receipt');
+var receiptModel = require('../models/receipt-model');
 
 
 //get request for the receipt upload, shows the index.ejs debug page for now.

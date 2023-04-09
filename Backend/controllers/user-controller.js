@@ -1,4 +1,4 @@
-const User = require('../models/user'); //user model
+const User = require('../models/user-model'); //user model
 const bcrypt = require('bcrypt'); // this package is used for hashing.
 const mysql = require('mysql2'); //used for mysql calls
 const config = require('../config/config.json'); //used to get db details
