@@ -41,14 +41,20 @@ const SearchItem = () => {
         setIsChecked2(!isChecked2);
     };
 
+    const [isChecked3, setIsChecked3] = useState(false);
+    const handleCheck3 = () => {
+        setIsChecked3(!isChecked3);
+    };
+
     const data = [
         { key: '1', value: 'Food/Drink' },
-        { key: '2', value: 'Appliances' },
-        { key: '3', value: 'Health' },
-        { key: '4', value: 'Computers'},
-        { key: '5', value: 'Vegetables' },
-        { key: '6', value: 'Diary Products' },
-        { key: '7', value: 'Drinks' },
+        { key: '2', value: 'Electrical' },
+        { key: '3', value: 'Fruit & Veg' },
+        { key: '4', value: 'Dairy, Eggs & Fridge'},
+        { key: '5', value: 'Drinks' },
+        { key: '6', value: 'Freezer' },
+        { key: '7', value: 'Liquor' },
+        { key: '8', value: 'Meat, Seafood & Deli' },
     ]
 
     const data1 = [
@@ -63,7 +69,7 @@ const SearchItem = () => {
     
 
     const getItem = async () => {
-        const postobj = { name: itemName, checkWool: isChecked1, checkCol: isChecked2, checkSale: isChecked, selectCat: selectedCat, selectSor: selectedSor }
+        const postobj = { name: itemName, checkWool: isChecked1, checkCol: isChecked2, checkAld: isChecked3, checkSale: isChecked, selectCat: selectedCat, selectSor: selectedSor }
         await axios.post(`${api}/item/searchFilter`, postobj)
             .then(function (response) {
                 if (response) {
@@ -76,28 +82,70 @@ const SearchItem = () => {
     }
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.item} onPress={() => {
-            navigation.navigate('ItemInfo', {
-                name: item.ITEM_NAME,
-                image: item.IMAGE,
-                price: item.IP_FOUR_WK_HIGHEST_PRICE,
-                discount: item.IP_ITEM_BASE_PRICE,
-                percent: item.IP_ITEM_DISCOUNT_PCT,
-                catagory: item.CAT_NAME,
-                company: item.COM_NAME,
-                description: item.ITEM_DESC
-            })
-        }}>
-            <Image style={styles.image_container} source={{ uri: `${item.IMAGE}` }} />
-            <View style={{ width: '100%' }}>
-                <Text style={{ fontWeight: 'bold', width: '80%' }}>{item.ITEM_NAME}</Text>
-                <View style={{ flexDirection: "row" }}>
-                    <Text>Price: {item.IP_FOUR_WK_HIGHEST_PRICE}</Text>
-                    {item.IP_ITEM_DISCOUNT_PRICE > 0 ? <Text style={{ marginLeft: 10 }}>Discounted Price: {item.IP_ITEM_BASE_PRICE}</Text> : <Text></Text>}
+            // If no discount show first display, no styles for discount/ price
+            item.IP_ITEM_DISCOUNT_PCT == '0.00' || item.IP_ITEM_DISCOUNT_PCT == null ?
+
+            <TouchableOpacity style={styles.item} onPress={() => {
+                navigation.navigate('ItemInfo', {
+                    name: item.ITEM_NAME,
+                    image: item.IMAGE,
+                    price: item.IP_FOUR_WK_HIGHEST_PRICE,
+                    discount: item.IP_ITEM_BASE_PRICE,
+                    percent: item.IP_ITEM_DISCOUNT_PCT,
+                    catagory: item.CAT_NAME,
+                    company: item.COM_NAME,
+                    description: item.ITEM_DESC
+                })
+            }}>
+
+                <Image style={styles.image_container} source={{ uri: `${item.IMAGE}` }} />
+                <View style={{ width: '100%' }}>
+                    <Text style={{ fontWeight: 'bold', width: '80%' }}>{item.ITEM_NAME}</Text>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text>$ {item.IP_FOUR_WK_HIGHEST_PRICE}</Text>
+                        {item.IP_ITEM_DISCOUNT_PRICE > 0 ? <Text style={{ marginLeft: 10 }}>Discounted Price: {item.IP_ITEM_BASE_PRICE}</Text> : <Text></Text>}
+                    </View>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text>{item.CAT_NAME ? item.CAT_NAME : "NO CATEGORY"}</Text>
+                        <Text style={{ marginLeft: 50 }}>{item.COM_NAME}</Text>
+                    </View>
                 </View>
-                <Text>Category: {item.CAT_NAME ? item.CAT_NAME : "NO CATEGORY"}</Text>
-            </View>
-        </TouchableOpacity>
+
+            </TouchableOpacity >
+
+            :
+            //  else display colour styled discounts and price
+            <TouchableOpacity style={styles.item} onPress={() => {
+                navigation.navigate('ItemInfo', {
+                    name: item.ITEM_NAME,
+                    image: item.IMAGE,
+                    price: item.IP_FOUR_WK_HIGHEST_PRICE,
+                    discount: item.IP_ITEM_BASE_PRICE,
+                    percent: item.IP_ITEM_DISCOUNT_PCT,
+                    catagory: item.CAT_NAME,
+                    company: item.COM_NAME,
+                    description: item.ITEM_DESC
+                })
+            }}>
+                <Image style={styles.image_container} source={{ uri: `${item.IMAGE}` }} />
+                <View style={{ width: '100%' }}>
+                    <Text style={{ fontWeight: 'bold', width: '80%' }}>{item.ITEM_NAME}</Text>
+                    <View style={{ flexDirection: "row" }}>
+
+
+                        <Text style={{ textDecorationLine: "line-through" }}>
+
+                            ${item.IP_FOUR_WK_HIGHEST_PRICE}</Text>
+                        <Text style={{ marginLeft: 5, fontWeight: 'bold', color: 'green' }}>${item.IP_ITEM_BASE_PRICE}</Text>
+                        <Text style={{ marginLeft: 5, color: 'red' }}>SAVE {(item.IP_ITEM_DISCOUNT_PCT * 100).toFixed(0)}%</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text>{item.CAT_NAME ? item.CAT_NAME : "NO CATEGORY"}</Text>
+                        <Text style={{ marginLeft: 50 }}>{item.COM_NAME}</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+            // end if statement for search colour display
     );
 
     return (
@@ -139,7 +187,18 @@ const SearchItem = () => {
                                     <Text style={styles.label}>Coles</Text>
                                 </View>
                             </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={handleCheck3}>
+                        <View style={styles.container}>
+
+                            <View style={{ flexDirection: 'row' }}>
+
+                                <View style={[styles.checkbox, isChecked3 && styles.checkboxChecked]} />
+                                <Text style={styles.label}>Aldi</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
 
                         <TouchableOpacity onPress={handleCheck}>
                             <View style={styles.container}>
@@ -162,7 +221,7 @@ const SearchItem = () => {
 
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 
-                    <Text style={styles.title1}>Categories:</Text>
+                    <Text style={styles.title1}>Category:</Text>
                         <View style={{ flex: 1 }}>
 
                         <SelectList
@@ -182,7 +241,7 @@ const SearchItem = () => {
                             data={data}
                             
                 
-                            save="value"
+                            save="key"
                         />
                    
                         </View>
@@ -206,7 +265,7 @@ const SearchItem = () => {
                             setSelected={(val) => setSelectedSor(val)}
                             data={data1}
 
-                                save="value"
+                            save="key"
                             />
                         </View>
 
@@ -288,7 +347,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'black',
         marginRight: 10,
-        marginLeft: 100,
+        marginLeft: 50,
     },
     checkboxChecked: {
         backgroundColor: 'green',
