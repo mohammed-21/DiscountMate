@@ -19,9 +19,8 @@ import Register3 from './Screen/Register/register_3'
 import Register4 from './Screen/Register/register_4'
 
 // Menu screens
-import Main from './Screen/main';
-import Profile from './Screen/Profile';
-import Setting from './Screen/Setting';
+import Main from './Screen/Main';
+import Settings from './Screen/Settings';
 
 // Item screens
 //import Recommended from './Screen/Recommended';
@@ -34,9 +33,9 @@ import ScanReceipt from './Screen/ScanReceipt';
 import ReceiptResult from './Screen/receiptResult';
 
 // Interface Images
-import ProflieIcon from './assets/images/manIcon.png';
 import LeftArrow from './assets/images/leftArrow.svg';
-import Scan from './assets/images/scan.svg';
+import SettingsIcon from './assets/images/SettingsIcon.png';
+import ScanIcon from './assets/images/ScanIcon.png';
 import SearchIcon from './assets/images/SearchIcon.png';
 
 function addToStack(name, component, title, showHeader, showSearch, showSetting, showScan) {
@@ -53,14 +52,14 @@ function addToStack(name, component, title, showHeader, showSearch, showSetting,
                 headerLeft: () => (
                     <>
                         <TouchableOpacity
-                            style={styles.ProflieIcon}
+                            style={styles.SettingsIcon}
                             onPress={() => name === 'Main' ? navigation.replace('Login') : navigation.goBack() }>
                             <LeftArrow />
                         </TouchableOpacity>
                         {showSearch ?
                             <TouchableOpacity
                                 onPress={() => navigation.navigate('SearchItem')}>
-                                <Image style={styles.SearchIcon} source={SearchIcon} />
+                                <Image style={styles.menuIcon} source={SearchIcon} />
                             </TouchableOpacity>
                             : null}
                     </>
@@ -69,14 +68,14 @@ function addToStack(name, component, title, showHeader, showSearch, showSetting,
                     <>
                         {showSetting ?
                             <TouchableOpacity
-                                style={Platform.OS === 'ios' ? styles.ProflieIcon : ''}
-                                onPress={() => navigation.navigate('Setting')}>
-                                <Image style={styles.ProflieIcon} source={ProflieIcon} />
+                                style={Platform.OS === 'ios' ? styles.SettingsIcon : ''}
+                                onPress={() => navigation.navigate('Settings')}>
+                                <Image style={styles.menuIcon} source={SettingsIcon} />
                             </TouchableOpacity>
                             : null}
                         {showScan ?
                             <TouchableOpacity on onPress={() => navigation.navigate('Scan')}>
-                                <Scan />
+                                <Image style={styles.menuIcon} source={ScanIcon} />
                             </TouchableOpacity>
                             : null}
                     </>
@@ -95,7 +94,6 @@ const Navigation = () => {
             {addToStack('Main', Main, 'DiscountMate', true, true, true, true)}
             {addToStack('SearchItem', SearchItem, 'Search Items', true, false, true, true)}
             {addToStack('ItemInfo', ItemInfo, 'Item Info', true, false, true, true)}
-            {addToStack('Profile', Profile, 'Dashboard', true, false, false, false)}
             {addToStack('Register', Register, 'Register', true, false, false, false)}
             {addToStack('Register3', Register3, 'Register', true, false, false, false)}
             {addToStack('Register4', Register4, 'Register', true, false, false, false)}
@@ -103,7 +101,7 @@ const Navigation = () => {
             {addToStack('ForgetPwd1', ForgetPwd1, null, false, false, false, false)}
             {addToStack('ForgetPwd2', ForgetPwd2, null, false, false, false, false)}
             {addToStack('DiscountNearby', DiscountNearby, 'Nearby Offers', true, false, true, false)}
-            {addToStack('Setting', Setting, 'Setting', true, false, false, false)}
+            {addToStack('Settings', Settings, 'Settings', true, false, false, false)}
             {addToStack('Scan', ScanReceipt, null, true, false, false, false)}
             {addToStack('Reset', ResetPwd, null, true, false, false, false)}
             {addToStack('ReceiptResult', ReceiptResult, 'Scan Result', true, false, false, false)}
@@ -112,15 +110,11 @@ const Navigation = () => {
 }
 
 const styles = StyleSheet.create({
-    ProflieIcon: {
-        width: 30,
-        height:30,
-        marginRight: 5
-    },
-    SearchIcon: {
+    menuIcon: {
         width: 30,
         height: 30,
-        marginLeft: 5
+        marginLeft: 10,
+        marginRight: 5
     },
     headerStyle:{
         fontSize:22,

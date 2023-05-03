@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { Recommended } from './module-recommended.js';
-import { DiscountNearby } from './module-nearby.js';
+import { Recommended } from './Modules/Recommended_Module.js';
 
 const Main = () => {
     const [activeTab, setActiveTab] = useState('Recommended');
@@ -21,8 +20,6 @@ const Main = () => {
         switch (activeTab) {
             case 'Recommended':
                 return <Recommended />;
-            case 'Nearby':
-                return <DiscountNearby />;
             case 'Favourites':
                 return <Text>Requires Favourites module</Text>;
             case 'Cart':
@@ -37,7 +34,6 @@ const Main = () => {
             <View>
                 <View style={styles.navbar}>
                     {createTab('Recommended')}
-                    {createTab('Nearby')}
                     {createTab('Favourites')}
                     {createTab('Cart')}
                 </View>

@@ -1,12 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  View
-} from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuth } from '../redux/actions/common';
 

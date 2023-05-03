@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, Image } from 'react-native';
-import api from '../core/Service';
+import api from '../../core/Service';
 
 export function Recommended(){
     const navigation = useNavigation();
