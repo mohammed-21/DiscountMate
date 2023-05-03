@@ -25,12 +25,16 @@ import ResetPwd from './Screen/ResetPwd';
 import ReceiptResult from './Screen/receiptResult';
 import ItemInfo from './Screen/ItemInfo';
 import SearchItem from './Screen/SearchItem';
+//import FilterItem from './Screen/FilterItem';
+//import Drawer fom './components/drawer';
 
 //svg
 import ProflieIcon from './assets/images/manIcon.png';
 import LeftArrow from './assets/images/leftArrow.svg';
 import Scan from './assets/images/scan.svg';
 import SearchIcon from './assets/images/SearchIcon.png';
+//import filter from './assets/images/filter.png';
+//import Icon from 'react-native-vector-icons/Ionicons';
 
 const Navigation = () => {
     const navigation = useNavigation();
@@ -49,11 +53,16 @@ const Navigation = () => {
                     headerTitleAlign: 'center',
                     headerTitleStyle: styles.headerStyle,
                     headerLeft: () => (
+                        <>
                         <TouchableOpacity
                             onPress={() => navigation.navigate('SearchItem')}>
                             <Image style={styles.SearchIcon} source={SearchIcon} />
                         </TouchableOpacity>
+
+                        
+                        </>
                     ),
+                    
                     headerRight: () => (
                         <>
                             <TouchableOpacity
@@ -64,6 +73,8 @@ const Navigation = () => {
                             <TouchableOpacity on onPress={() => navigation.navigate('Scan')}>
                                 <Scan />
                             </TouchableOpacity>
+
+
                         </>
                     )
                 }}
@@ -89,6 +100,10 @@ const Navigation = () => {
                     ),
                 }}
             />
+
+
+
+
             <Stack.Screen
                 name='ItemInfo'
                 component={ItemInfo}
