@@ -23,8 +23,6 @@ import Main from './Screen/Main';
 import Settings from './Screen/Settings';
 
 // Item screens
-//import Recommended from './Screen/Recommended';
-import DiscountNearby from './Screen/DiscountNearby';
 import SearchItem from './Screen/SearchItem';
 import ItemInfo from './Screen/ItemInfo';
 
@@ -37,8 +35,6 @@ import LeftArrow from './assets/images/leftArrow.svg';
 import SettingsIcon from './assets/images/SettingsIcon.png';
 import ScanIcon from './assets/images/ScanIcon.png';
 import SearchIcon from './assets/images/SearchIcon.png';
-//import filter from './assets/images/filter.png';
-//import Icon from 'react-native-vector-icons/Ionicons';
 
 function addToStack(name, component, title, showHeader, showSearch, showSetting, showScan) {
     const navigation = useNavigation();
@@ -102,7 +98,6 @@ const Navigation = () => {
             {addToStack('ForgetPwd', ForgetPwd, 'Forgot Password?', false, false, false, false)}
             {addToStack('ForgetPwd1', ForgetPwd1, null, false, false, false, false)}
             {addToStack('ForgetPwd2', ForgetPwd2, null, false, false, false, false)}
-            {addToStack('DiscountNearby', DiscountNearby, 'Nearby Offers', true, false, true, false)}
             {addToStack('Settings', Settings, 'Settings', true, false, false, false)}
             {addToStack('Scan', ScanReceipt, null, true, false, false, false)}
             {addToStack('Reset', ResetPwd, null, true, false, false, false)}
