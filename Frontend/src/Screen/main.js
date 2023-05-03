@@ -1,56 +1,71 @@
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import {SafeAreaView, Text, TouchableOpacity, StyleSheet, View} from 'react-native';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-//svg
-import RightArrow from '../assets/images/rightarrow.svg';
+import { Recommended } from './Modules/Recommended_Module.js';
 
 const Main = () => {
-    const navigation = useNavigation()
+    const [activeTab, setActiveTab] = useState('Recommended');
+
+    function createTab(name) {
+        return (
+            <TouchableOpacity style={styles.tab} onPress={() => setActiveTab(name)}>
+                <Text style={activeTab === name ? styles.activeTab : styles.inactiveTab}>
+                    {name}
+                </Text>
+            </TouchableOpacity>
+        );
+    };
+
+    function showTabContent() {
+        switch (activeTab) {
+            case 'Recommended':
+                return <Recommended />;
+            case 'Favourites':
+                return <Text>Requires Favourites module</Text>;
+            case 'Cart':
+                return <Text>Requires Cart module</Text>;
+            default:
+                return <Text>Nothing to see here</Text>;
+        }
+    }
+
     return (
-        <SafeAreaView>
-            <View style={styles.container}>
-                <View style={styles.touchContainer}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Recommended')}>
-                        <View style={styles.touch} >
-                            <Text style={styles.touch_text}>Recommended Items</Text>
-                            <RightArrow />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('DiscountNearby')}>
-                        <View style={styles.touch} >
-                            <Text style={styles.touch_text}>Nearby Offers</Text>
-                            <RightArrow />
-                        </View>
-                    </TouchableOpacity>
+        <>
+            <View>
+                <View style={styles.navbar}>
+                    {createTab('Recommended')}
+                    {createTab('Favourites')}
+                    {createTab('Cart')}
+                </View>
+                <View>
+                    {showTabContent()}
                 </View>
             </View>
-        </SafeAreaView>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
-    container: { marginLeft: '18%' },
-    btn: {
-        marginTop: 10,
-        backgroundColor: 'grey',
-        borderRadius: 20,
-        paddingVertical: 10
-    },
-    btn_text: {
-        textAlign: 'center',
-        color: 'black',
-        fontSize: 20
-    },
-    touchContainer: { paddingTop: 32 },
-    touch: {
+    navbar: {
         flexDirection: 'row',
-        alignItems: 'center'
+        marginTop: 10,
+        backgroundColor: 'white',
+        paddingHorizontal: 32,
+        paddingVertical: 10,
+        justifyContent: 'center'
     },
-    touch_text: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#555555'
+    tab: {
+        marginLeft: 16
+    },
+    activeTab: {
+        color: '#4F44D0',
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+    inactiveTab: {
+        fontSize: 16,
+        color: '#7d7d7d',
+        fontWeight: 'bold'
     }
 })
 

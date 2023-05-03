@@ -29,7 +29,7 @@ const Login = () => {
                 dispatch(SetPhoneNum(response.data.phone));
                 dispatch(SetEmail(response.data.email));
                 dispatch(SetToken(response.data.token));
-                navigation.replace('Recommended');
+                navigation.replace('Main');
             })
             .catch(function (error) {
                 console.warn(error);

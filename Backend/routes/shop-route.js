@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 //controller
-const shopController = require('../controllers/shop');
-const shop = require('../models/shop');
+const shopController = require('../controllers/shop-controller');
+const shop = require('../models/shop-model');
 
 //get request
 router.get('/', shopController.getAllShops)

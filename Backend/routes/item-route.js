@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 //controller
-const itemController = require('../controllers/item');
+const itemController = require('../controllers/item-controller');
 
 const mysql = require('mysql2'); //used for mysql calls
 const config = require('../config/config.json'); //used to get db details

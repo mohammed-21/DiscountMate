@@ -2,17 +2,17 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser'); //middleware used to handle request bodies
-const errorController = require('./controllers/error'); //error handling
+const errorController = require('./controllers/error-controller'); //error handling
 const mongoose = require('mongoose'); //used to access the MongoDB
 require("dotenv").config(); //used to access the .env file easily
 
 //routes from /routes/
-const shopRoute = require('./routes/shop');
-const itemRoute = require('./routes/item');
-const receiptRoute = require('./routes/receipt')
-const ocrRoute = require('./routes/ocrRoute');
-const userRoute = require('./routes/user');
-const viewReceiptRoute = require('./routes/viewReceipt');
+const shopRoute = require('./routes/shop-route');
+const itemRoute = require('./routes/item-route');
+const receiptRoute = require('./routes/receipt-route')
+const ocrRoute = require('./routes/ocr-route');
+const userRoute = require('./routes/user-route');
+const viewReceiptRoute = require('./routes/viewReceipt-route');
 
 //port to listen on from .ENV file
 const ports = process.env.PORT || 3000;
@@ -35,13 +35,13 @@ mongoose.connect(process.env.MONGO_URL,
 app.use('/shop', shopRoute);
 app.use('/item', itemRoute);
 app.use('/receipt', receiptRoute);
-app.use('/OCR', ocrRoute);
+app.use('/ocr', ocrRoute);
 app.use('/user', userRoute);
 app.use('/view', viewReceiptRoute);
 
 //Default request (display no error)
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/page/index.html");
+app.use((req, res) => {
+    res.sendStatus(404);
 });
 
 //error handling if no route is present etc

@@ -277,8 +277,6 @@ const styles = StyleSheet.create({
         backgroundColor:'#6B7DDA',
         borderRadius:4,
         marginRight:5
-    },
-
-      
+    }
 }) 
 export default DiscountNearby;

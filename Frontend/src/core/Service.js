@@ -1,3 +1,3 @@
-let baseURL = 'http://192.168.1.102:3000'
+let baseURL = 'http://192.168.20.4:3000'
 
 export default baseURL
