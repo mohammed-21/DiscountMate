@@ -37,6 +37,8 @@ import LeftArrow from './assets/images/leftArrow.svg';
 import SettingsIcon from './assets/images/SettingsIcon.png';
 import ScanIcon from './assets/images/ScanIcon.png';
 import SearchIcon from './assets/images/SearchIcon.png';
+//import filter from './assets/images/filter.png';
+//import Icon from 'react-native-vector-icons/Ionicons';
 
 function addToStack(name, component, title, showHeader, showSearch, showSetting, showScan) {
     const navigation = useNavigation();
