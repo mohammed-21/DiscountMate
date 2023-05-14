@@ -1,7 +1,7 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {TouchableOpacity, StyleSheet, Image, Text} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions} from '@react-navigation/native';
 
 // Navigation stack
 const Stack = createNativeStackNavigator();
@@ -38,49 +38,86 @@ import SearchIcon from './assets/images/SearchIcon.png';
 
 function addToStack(name, component, title, showHeader, showSearch, showSetting, showScan) {
     const navigation = useNavigation();
-    return (<Stack.Screen
-        name={name}
-        component={component}
-        options={
-            {
-                title: title,
-                headerShown: showHeader,
-                headerTitleAlign: 'center',
-                headerTitleStyle: styles.headerStyle,
-                headerLeft: () => (
-                    <>
-                        <TouchableOpacity
-                            style={styles.SettingsIcon}
-                            onPress={() => name === 'Main' ? navigation.replace('Login') : navigation.goBack() }>
-                            <LeftArrow />
-                        </TouchableOpacity>
-                        {showSearch ?
+    return (
+        <Stack.Screen
+            name={name}
+            component={component}
+            options={
+                {
+                    title: title,
+                    headerShown: showHeader,
+                    headerTitleAlign: name === 'Scan'?'left':'center',
+                    headerStyle: styles.headerStyle,
+                    headerTitleStyle: styles.headerTitleStyle,
+                    headerLeft: () => (
+                        <>
                             <TouchableOpacity
-                                onPress={() => navigation.navigate('SearchItem')}>
-                                <Image style={styles.menuIcon} source={SearchIcon} />
+                                style={styles.SettingsIcon}
+                                onPress={() => name === 'Main' ? navigation.replace('Login') : navigation.goBack() }>
+                                <LeftArrow style={{color: "white"}}/>
                             </TouchableOpacity>
-                            : null}
-                    </>
-                ),
-                headerRight: () => (
-                    <>
-                        {showSetting ?
-                            <TouchableOpacity
-                                style={Platform.OS === 'ios' ? styles.SettingsIcon : ''}
-                                onPress={() => navigation.navigate('Settings')}>
-                                <Image style={styles.menuIcon} source={SettingsIcon} />
-                            </TouchableOpacity>
-                            : null}
-                        {showScan ?
-                            <TouchableOpacity on onPress={() => navigation.navigate('Scan')}>
-                                <Image style={styles.menuIcon} source={ScanIcon} />
-                            </TouchableOpacity>
-                            : null}
-                    </>
-                )
+                            {
+                                showSearch && name !== 'Scan'?
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate('SearchItem')}>
+                                        <Image style={styles.menuIcon} source={SearchIcon} />
+                                    </TouchableOpacity>
+                                : null
+                            }
+                            
+                        </>
+                    ),
+                    headerRight: () => (
+                        <>
+                            {
+                                showSetting ?
+                                    <TouchableOpacity
+                                        style={Platform.OS === 'ios' ? styles.SettingsIcon : ''}
+                                        onPress={() => navigation.navigate('Settings')}>
+                                        <Image style={styles.menuIcon} source={SettingsIcon} />
+                                    </TouchableOpacity>
+                                : null
+                            }
+                            {
+                                showScan ?
+                                    <TouchableOpacity 
+                                        onPress={() => {
+                                            navigation.dispatch(
+                                                CommonActions.navigate({
+                                                    name: 'Scan',
+                                                    params: {
+                                                        pressedButton: 'scanIcon'
+                                                    }
+                                                })
+                                            )
+                                        }}
+                                    >
+                                        <Image style={styles.menuIcon} source={ScanIcon} />
+                                    </TouchableOpacity>
+                                : null
+                            }
+                            {
+                                showSearch && name === 'Scan'?
+                                <TouchableOpacity 
+                                    onPress={() => {
+                                        navigation.dispatch(
+                                                CommonActions.navigate({
+                                                    name: 'Scan',
+                                                    params: {
+                                                        pressedButton: 'clearBtn'
+                                                    }
+                                                })
+                                            )
+                                    }}
+                                >
+                                        <Text style={{fontWeight: '700'}}>Clear</Text>
+                                </TouchableOpacity>:null
+                            }
+                        </>
+                    )
+                }
             }
-        }
-    />
+        />
     );
 }
 
@@ -88,7 +125,7 @@ const Navigation = () => {
     return (
         <Stack.Navigator>
             {/*addToStack(name, component, title, showHeader, showSearch, showSetting, showScan)*/}
-            {addToStack('Login', Login, null, false, false, false, false)}
+            {/* {addToStack('Login', Login, null, false, false, false, false)} */}
             {addToStack('Main', Main, 'DiscountMate', true, true, true, true)}
             {addToStack('SearchItem', SearchItem, 'Search Items', true, false, true, true)}
             {addToStack('ItemInfo', ItemInfo, 'Item Info', true, false, true, true)}
@@ -99,7 +136,7 @@ const Navigation = () => {
             {addToStack('ForgetPwd1', ForgetPwd1, null, false, false, false, false)}
             {addToStack('ForgetPwd2', ForgetPwd2, null, false, false, false, false)}
             {addToStack('Settings', Settings, 'Settings', true, false, false, false)}
-            {addToStack('Scan', ScanReceipt, null, true, false, false, false)}
+            {addToStack('Scan', ScanReceipt, "Upload Receipt", true, true, false, false)}
             {addToStack('Reset', ResetPwd, null, true, false, false, false)}
             {addToStack('ReceiptResult', ReceiptResult, 'Scan Result', true, false, false, false)}
         </Stack.Navigator>
@@ -111,12 +148,18 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         marginLeft: 10,
-        marginRight: 5
+        marginRight: 5,
     },
-    headerStyle:{
+    SettingsIcon: {
+        color: "white"
+    },
+    headerTitleStyle:{
         fontSize:22,
-        fontWeight:'700',
-        color:'#4F44D0'
+        fontWeight:'100',
+        color:'#ffffff',
+    },
+    headerStyle: {
+        backgroundColor: '#4F44D0',
     }
 })
     
